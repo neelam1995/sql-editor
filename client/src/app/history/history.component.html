@@ -1,0 +1,8 @@
+<div class="history" *ngIf="history.length">
+    <h3>Query History</h3>
+    <ul>
+        <li *ngFor="let q of history">
+            <button (click)="select.emit(q)">{{ q }}</button>
+        </li>
+    </ul>
+</div>

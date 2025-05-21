@@ -1,0 +1,8 @@
+<div class="saved" *ngIf="savedQueries.length">
+    <h3>Saved Queries</h3>
+    <ul>
+        <li *ngFor="let q of savedQueries">
+            <button (click)="select.emit(q.sql)">{{ q.name }}</button>
+        </li>
+    </ul>
+</div>

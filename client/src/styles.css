@@ -1,0 +1,20 @@
+:root {
+  --background-color: #fff;
+  --text-color: #000;
+}
+
+.dark-theme {
+  --background-color: #121212;
+  --text-color: #e0e0e0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+body, .mat-app-background {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

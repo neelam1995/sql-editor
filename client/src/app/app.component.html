@@ -1,0 +1,71 @@
+<!-- Top Toolbar -->
+<mat-toolbar color="primary">
+  SQL Editor
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="toggleDarkMode()">
+    <mat-icon>dark_mode</mat-icon>
+  </button>
+</mat-toolbar>
+
+<!-- Full Layout -->
+<div class="layout-container">
+
+  <!-- Left Sidebar: Schema -->
+  <aside class="sidebar-left">
+    <app-schema
+      [schema]="schema"
+      (tableSelected)="sqlQuery = 'SELECT * FROM ' + $event + ';'">
+    </app-schema>
+  </aside>
+
+  <!-- Center: Editor and Results -->
+  <main class="main-content">
+
+    <!-- Preset Selector -->
+    <mat-form-field appearance="fill" style="width: 100%; margin: 16px 0;">
+      <mat-label>Choose a preset query</mat-label>
+      <mat-select (selectionChange)="sqlQuery = $event.value">
+        <mat-option *ngFor="let preset of presetQueries" [value]="preset.sql">
+          {{ preset.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Tabs -->
+    <app-tabs
+      [tabs]="tabs"
+      [currentTabIndex]="currentTabIndex"
+      (select)="currentTabIndex = $event"
+      (close)="closeTab($event)"
+      (add)="addTab()">
+    </app-tabs>
+
+    <!-- SQL Editor -->
+    <textarea [(ngModel)]="sqlQuery" rows="6" style="width: 100%; margin-bottom: 12px;"></textarea>
+
+    <!-- Save + Run + Format Buttons -->
+    <div class="button-bar">
+      <mat-form-field appearance="outline" class="query-name-field">
+        <mat-label>Query name</mat-label>
+        <input matInput [(ngModel)]="newQueryName" />
+      </mat-form-field>
+      <button mat-raised-button color="accent" (click)="saveQuery()" [disabled]="!newQueryName.trim()">Save</button>
+      <button mat-raised-button color="primary" (click)="runQuery()" [disabled]="loading">Run</button>
+      <button mat-stroked-button (click)="formatQuery()">Format</button>
+    </div>
+
+    <!-- Query Results -->
+    <app-query-result [rows]="results" [columns]="columns"></app-query-result>
+
+    <!-- Error Display -->
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+  </main>
+
+  <!-- Right Sidebar: History + Saved -->
+  <aside class="sidebar-right">
+    <app-history [history]="history" (select)="sqlQuery = $event"></app-history>
+    <app-saved [savedQueries]="savedQueries" (select)="sqlQuery = $event"></app-saved>
+  </aside>
+
+</div>

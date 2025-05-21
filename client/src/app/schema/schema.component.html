@@ -1,0 +1,11 @@
+<div class="schema-panel">
+    <h3>Database Schema</h3>
+    <div *ngFor="let table of schema | keyvalue" class="table-entry">
+        <div class="table-header" (click)="selectTable(table.key)">
+            {{ table.key }}
+        </div>
+        <div class="columns">
+            <code *ngFor="let col of table.value">{{ col }}</code>
+        </div>
+    </div>
+</div>

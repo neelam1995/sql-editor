@@ -1,0 +1,8 @@
+<div class="tab-bar">
+    <div *ngFor="let tab of tabs; let i = index" [class.active]="i === currentTabIndex" class="tab"
+        (click)="selectTab(i)">
+        {{ tab.label }}
+        <button (click)="close.emit(i); $event.stopPropagation()">x</button>
+    </div>
+    <button class="add-tab" (click)="add.emit()">➕</button>
+</div>
