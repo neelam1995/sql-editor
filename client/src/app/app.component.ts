@@ -80,6 +80,9 @@ export class AppComponent {
     this.http.post<any>('http://localhost:3001/api/query', { sql: this.sqlQuery }).subscribe({
       next: (res) => {
         this.results = res.rows;
+        if (res.schema) {
+          this.schema = res.schema;
+        }
         this.columns = Object.keys(this.results[0] || {});
         this.error = null;
         this.loading = false;
